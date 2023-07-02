@@ -1,15 +1,14 @@
 function Card(props) {
-
-    function handleClick() {
-      props.onCardClick(props.card);
-    }
+  function handleClick() {
+    props.onCardClick(props.card);
+  }
 
   return (
-    <li className="elements__card" key={props.card.key}>
+    <div>
       <button className="elements__delete-button" type="button" aria-label="Удалить"></button>
       <img
         className="elements__photo"
-        alt=""
+        alt={props.card.name}
         src={props.card.link}
         onClick={handleClick}
       />
@@ -20,9 +19,8 @@ function Card(props) {
           <p className="elements__like-counter">{props.card.likes.length}</p>
         </div>
       </div>
-    </li>
-    );
-    debugger;
+    </div>
+  );
 }
 
 export default Card;

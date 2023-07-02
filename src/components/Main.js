@@ -3,9 +3,9 @@ import { api } from '../utils/Api.js';
 import Card from './Card.js';
 
 function Main(props) {
-  const [userName, setUserName] = React.useState();
-  const [userDescription, setUserDescription] = React.useState();
-  const [userAvatar, setUserAvatar] = React.useState();
+  const [userName, setUserName] = React.useState('');
+  const [userDescription, setUserDescription] = React.useState('');
+  const [userAvatar, setUserAvatar] = React.useState('');
 
   const [cards, setCards] = React.useState([]);
 
@@ -52,7 +52,11 @@ function Main(props) {
       <section>
         <ul className="elements">
           {cards.map((card) => {
-            return <Card card={card} key={card._id} onCardClick={props.onCardClick} />;
+            return (
+              <li className="elements__card" key={card._id}>
+                <Card card={card} onCardClick={props.onCardClick} />
+              </li>
+            );
           })}
         </ul>
       </section>

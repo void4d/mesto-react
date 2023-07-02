@@ -14,6 +14,9 @@ function App() {
   const [isImagePopupOpen, setImagePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
 
+  const isAnyPopupOpen =
+    isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || isImagePopupOpen;
+
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
   }
@@ -30,7 +33,7 @@ function App() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
-    setImagePopupOpen(false)
+    setImagePopupOpen(false);
 
     setSelectedCard({});
   }
@@ -41,18 +44,19 @@ function App() {
   }
 
   React.useEffect(() => {
-    function handleCloseByEsc(evt) {
-      if (evt.key === 'Escape') {
-        closeAllPopups();
+    if (isAnyPopupOpen) {
+      function handleCloseByEsc(evt) {
+        if (evt.key === 'Escape') {
+          closeAllPopups();
+        }
       }
+      document.addEventListener('keydown', handleCloseByEsc);
+
+      return () => {
+        document.removeEventListener('keydown', handleCloseByEsc);
+      };
     }
-
-    document.addEventListener('keydown', handleCloseByEsc);
-
-    return () => {
-      document.removeEventListener('keydown', handleCloseByEsc);
-    };
-  });
+  }, [isAnyPopupOpen]);
 
   return (
     <div className="page">
@@ -66,7 +70,7 @@ function App() {
       <Footer />
 
       <ImagePopup isOpen={isImagePopupOpen} card={selectedCard} onClose={closeAllPopups} />
-      
+
       <PopupWithForm
         class="profile-edit"
         id="editform"
@@ -84,7 +88,7 @@ function App() {
             required
             minLength="2"
             maxLength="40"
-            noValidate
+
           />
           <span id="username-error" className="popup__error-message"></span>
         </div>
@@ -97,7 +101,7 @@ function App() {
             required
             minLength="2"
             maxLength="200"
-            noValidate
+            
           />
           <span id="about-error" className="popup__error-message"></span>
         </div>
@@ -122,7 +126,7 @@ function App() {
             required
             minLength="2"
             maxLength="30"
-            noValidate
+            
           />
           <span id="cardname-error" className="popup__error-message"></span>
         </div>
@@ -134,7 +138,7 @@ function App() {
             placeholder="Ссылка на картинку"
             required
             type="url"
-            noValidate
+            
           />
           <span id="link-error" className="popup__error-message"></span>
         </div>
@@ -159,7 +163,7 @@ function App() {
             placeholder="Ссылка на картинку"
             required
             type="url"
-            noValidate
+            
           />
           <span id="avatar-link-error" className="popup__error-message"></span>
         </div>
