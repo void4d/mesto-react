@@ -11,9 +11,15 @@ function Card(props) {
     props.onCardClick(props.card);
   }
 
+  function handleLikeClick() {
+    props.onCardLike(props.card)
+  }
+
   return (
-    <div>{isOwn &&
-      <button className="elements__delete-button" type="button" aria-label="Удалить"></button>}
+    <div>
+      {isOwn && (
+        <button className="elements__delete-button" type="button" aria-label="Удалить"></button>
+      )}
       <img
         className="elements__photo"
         alt={props.card.name}
@@ -23,7 +29,12 @@ function Card(props) {
       <div className="elements__bottom-part">
         <h2 className="elements__heading">{props.card.name}</h2>
         <div className="elements__like-block">
-          <button className={`elements__like-button ${isLiked ? 'elements__like-button_active': '' }`} type="button" aria-label="Понравилось"></button>
+          <button
+            className={`elements__like-button ${isLiked ? 'elements__like-button_active' : ''}`}
+            type="button"
+            aria-label="Понравилось"
+            onClick={handleLikeClick}
+          ></button>
           <p className="elements__like-counter">{props.card.likes.length}</p>
         </div>
       </div>

@@ -7,7 +7,6 @@ import ImagePopup from './ImagePopup';
 import React from 'react';
 import { api } from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { CardsContext } from '../contexts/CardsContext';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState('');
@@ -15,8 +14,8 @@ function App() {
 
   React.useEffect(() => {
     Promise.all([api.getUserInfoApi(), api.getInitialCardsApi()]).then(([profile, cards]) => {
-      setCurrentUser(profile);
       setCards(cards);
+      setCurrentUser(profile);
     });
   }, []);
 
@@ -72,9 +71,26 @@ function App() {
     }
   }, [isAnyPopupOpen]);
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((profile) => profile._id === currentUser._id);
+
+    if (!isLiked) {
+      api.putLikeApi(card._id).then((newCard) => {
+        setCards((state) => {
+          state.map((c) => (c._id === card._id ? newCard : c));
+        });
+      });
+    } else {
+      api.deleteLikeApi(card._id).then((newCard) => {
+        setCards((state) => {
+          state.map((c) => (c._id === card._id ? newCard : c));
+        })
+      });
+    }
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <CardsContext.Provider value={cards}>
         <div className="page">
           <Header />
           <Main
@@ -82,6 +98,8 @@ function App() {
             onAddPlace={handleAddPlaceClick}
             onEditAvatar={handleEditAvatarClick}
             onCardClick={handleCardClick}
+            onCardLike={handleCardLike}
+            cards={cards}
           />
           <Footer />
 
@@ -193,7 +211,6 @@ function App() {
             </button>
           </PopupWithForm>
         </div>
-      </CardsContext.Provider>
     </CurrentUserContext.Provider>
   );
 }
