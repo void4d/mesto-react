@@ -5,20 +5,29 @@ function Card(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
   const isOwn = props.card.owner._id === currentUser._id;
-  const isLiked = props.card.likes.some(profile => profile._id === currentUser._id)
+  const isLiked = props.card.likes.some((profile) => profile._id === currentUser._id);
 
   function handleClick() {
     props.onCardClick(props.card);
   }
 
   function handleLikeClick() {
-    props.onCardLike(props.card)
+    props.onCardLike(props.card);
+  }
+
+  function handleDeleteClick() {
+    props.onCardDelete(props.card);
   }
 
   return (
     <div>
       {isOwn && (
-        <button className="elements__delete-button" type="button" aria-label="Удалить"></button>
+        <button
+          className="elements__delete-button"
+          type="button"
+          aria-label="Удалить"
+          onClick={handleDeleteClick}
+        ></button>
       )}
       <img
         className="elements__photo"
