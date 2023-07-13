@@ -16,10 +16,12 @@ function App() {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    Promise.all([api.getUserInfoApi(), api.getInitialCardsApi()]).then(([profile, cards]) => {
-      setCards(cards);
-      setCurrentUser(profile);
-    });
+    Promise.all([api.getUserInfoApi(), api.getInitialCardsApi()])
+      .then(([profile, cards]) => {
+        setCards(cards);
+        setCurrentUser(profile);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
@@ -77,45 +79,65 @@ function App() {
     const isLiked = card.likes.some((profile) => profile._id === currentUser._id);
 
     if (!isLiked) {
-      api.putLikeApi(card._id).then((newCard) => {
-        setCards((state) => {
-          return state.map((c) => (c._id === card._id ? newCard : c));
-        });
-      });
+      api
+        .putLikeApi(card._id)
+        .then((newCard) => {
+          setCards((state) => {
+            return state.map((c) => (c._id === card._id ? newCard : c));
+          });
+        })
+        .catch((err) => console.log(err));
     } else {
-      api.deleteLikeApi(card._id).then((newCard) => {
-        setCards((state) => {
-          return state.map((c) => (c._id === card._id ? newCard : c));
-        });
-      });
+      api
+        .deleteLikeApi(card._id)
+        .then((newCard) => {
+          setCards((state) => {
+            return state.map((c) => (c._id === card._id ? newCard : c));
+          });
+        })
+        .catch((err) => console.log(err));
     }
   }
 
   function handleCardDelete(card) {
-    api.deleteCardApi(card._id).then(() => {
-      setCards((state) => {
-        return state.filter((c) => c._id !== card._id);
-      });
-    });
+    api
+      .deleteCardApi(card._id)
+      .then(() => {
+        setCards((state) => {
+          return state.filter((c) => c._id !== card._id);
+        });
+      })
+      .catch((err) => console.log(err));
   }
 
-  function handleUpateUser(data) {
-    api.setUserInfoApi(data.name, data.about).then((profile) => {
-      setCurrentUser(profile);
-      closeAllPopups();
-    });
+  function handleUpdateUser(data) {
+    api
+      .setUserInfoApi(data.name, data.about)
+      .then((profile) => {
+        setCurrentUser(profile);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleUpdateAvatar(avatarLink) {
-    api.changeAvatar(avatarLink.avatar).then((profile) => setCurrentUser(profile));
-    closeAllPopups();
+    api
+      .changeAvatar(avatarLink.avatar)
+      .then((profile) => {
+        setCurrentUser(profile);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleAddPlaceSubmit(data) {
-    api.postCardApi(data.name, data.link).then((newCard) => {
-      setCards([newCard, ...cards]);
-      closeAllPopups();
-    });
+    api
+      .postCardApi(data.name, data.link)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -137,7 +159,7 @@ function App() {
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-          onUpdateUser={handleUpateUser}
+          onUpdateUser={handleUpdateUser}
         />
 
         <AddPlacePopup

@@ -1,18 +1,9 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup(props) {
+function AddPlacePopup({ onAddPlace, isOpen, onClose }) {
   const [name, setName] = React.useState('');
   const [link, setLink] = React.useState('');
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    props.onAddPlace({
-      name: name,
-      link: link,
-    });
-  }
 
   function handleSetName(e) {
     setName(e.target.value);
@@ -22,14 +13,28 @@ function AddPlacePopup(props) {
     setLink(e.target.value);
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    onAddPlace({
+      name: name,
+      link: link,
+    });
+  }
+
+  React.useEffect(() => {
+    setName('');
+    setLink('');
+  }, [onClose, isOpen]);
+
   return (
     <PopupWithForm
       class="add-card"
       id="addform"
       name="profile-name"
       title="Новое место"
-      isOpen={props.isOpen}
-      onClose={props.onClose}
+      isOpen={isOpen}
+      onClose={onClose}
       onSubmit={handleSubmit}
     >
       <div className="popup__input-container">
@@ -42,6 +47,7 @@ function AddPlacePopup(props) {
           minLength="2"
           maxLength="30"
           onChange={handleSetName}
+          value={name}
         />
         <span id="cardname-error" className="popup__error-message"></span>
       </div>
@@ -54,6 +60,7 @@ function AddPlacePopup(props) {
           required
           type="url"
           onChange={handleSetLink}
+          value={link}
         />
         <span id="link-error" className="popup__error-message"></span>
       </div>
