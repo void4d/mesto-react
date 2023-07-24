@@ -42,3 +42,9 @@ body {
 @import url(./blocks/elements/__like-counter/elements__like-counter.css);
 @import url(./blocks/profile/__avatar-container/profile__avatar-container.css);
 @import url(./blocks/profile/__avatar-edit-icon/profile__avatar-edit-icon.css);
+@import url(./blocks/login-register/login-register.css);
+@import url(./blocks/login-register/__title/login-register__title.css);
+@import url(./blocks/login-register/__text/login-register__text.css);
+@import url(./blocks/login-register/__password/login-register__password.css);
+@import url(./blocks/login-register/__email/login-register__email.css);
+@import url(./blocks/login-register/__button/login-register__button.css);

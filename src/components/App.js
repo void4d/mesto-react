@@ -10,6 +10,8 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import Login from './Login';
+import Register from './Register';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '' });
@@ -153,6 +155,8 @@ function App() {
           onCardDelete={handleCardDelete}
           cards={cards}
         />
+        {/* <Login />
+        <Register /> */}
         <Footer />
 
         <ImagePopup isOpen={isImagePopupOpen} card={selectedCard} onClose={closeAllPopups} />
