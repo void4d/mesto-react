@@ -5,8 +5,8 @@ function Login() {
   return (
     <form className="login-register">
       <h1 className="login-register__title">Вход</h1>
-      <input className="login-register__email" placeholder='Email'></input>
-      <input className="login-register__password" placeholder='Пароль'></input>
+      <input className="login-register__email" placeholder='Email' type='email' required></input>
+      <input className="login-register__password" placeholder='Пароль' type='password' required></input>
       <button className='login-register__button'>Войти</button>
     </form>
   );
