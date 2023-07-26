@@ -1,103 +1,111 @@
-import '../index.css';
-import Header from './Header.js';
-import Main from './Main.js';
-import Footer from './Footer.js';
-import PopupWithForm from './PopupWithForm';
-import ImagePopup from './ImagePopup';
-import React from 'react';
-import { api } from '../utils/Api.js';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import EditProfilePopup from './EditProfilePopup';
-import EditAvatarPopup from './EditAvatarPopup';
-import AddPlacePopup from './AddPlacePopup';
-import Login from './Login';
-import Register from './Register';
+import '../index.css'
+import Header from './Header.js'
+import Main from './Main.js'
+import Footer from './Footer.js'
+import PopupWithForm from './PopupWithForm'
+import ImagePopup from './ImagePopup'
+import React from 'react'
+import { api } from '../utils/Api.js'
+import { CurrentUserContext } from '../contexts/CurrentUserContext'
+import EditProfilePopup from './EditProfilePopup'
+import EditAvatarPopup from './EditAvatarPopup'
+import AddPlacePopup from './AddPlacePopup'
+import Login from './Login'
+import Register from './Register'
+import SuccessPopup from './SuccessPopup'
+import FailPopup from './FailPopup'
 
 function App() {
-  const [currentUser, setCurrentUser] = React.useState({ name: '', about: '' });
-  const [cards, setCards] = React.useState([]);
+  const [currentUser, setCurrentUser] = React.useState({ name: '', about: '' })
+  const [cards, setCards] = React.useState([])
 
   React.useEffect(() => {
     Promise.all([api.getUserInfoApi(), api.getInitialCardsApi()])
       .then(([profile, cards]) => {
-        setCards(cards);
-        setCurrentUser(profile);
+        setCards(cards)
+        setCurrentUser(profile)
       })
-      .catch((err) => console.log(err));
-  }, []);
+      .catch((err) => console.log(err))
+  }, [])
 
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
+    React.useState(false)
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false)
 
-  const [isImagePopupOpen, setImagePopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({});
+  const [isImagePopupOpen, setImagePopupOpen] = React.useState(false)
+  const [selectedCard, setSelectedCard] = React.useState({})
 
   const isAnyPopupOpen =
-    isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || isImagePopupOpen;
+    isEditProfilePopupOpen ||
+    isAddPlacePopupOpen ||
+    isEditAvatarPopupOpen ||
+    isImagePopupOpen
 
   function handleEditAvatarClick() {
-    setEditAvatarPopupOpen(true);
+    setEditAvatarPopupOpen(true)
   }
 
   function handleEditProfileClick() {
-    setEditProfilePopupOpen(true);
+    setEditProfilePopupOpen(true)
   }
 
   function handleAddPlaceClick() {
-    setAddPlacePopupOpen(true);
+    setAddPlacePopupOpen(true)
   }
 
   function closeAllPopups() {
-    setEditProfilePopupOpen(false);
-    setAddPlacePopupOpen(false);
-    setEditAvatarPopupOpen(false);
-    setImagePopupOpen(false);
+    setEditProfilePopupOpen(false)
+    setAddPlacePopupOpen(false)
+    setEditAvatarPopupOpen(false)
+    setImagePopupOpen(false)
 
-    setSelectedCard({});
+    setSelectedCard({})
   }
 
   function handleCardClick(card) {
-    setImagePopupOpen(true);
-    setSelectedCard(card);
+    setImagePopupOpen(true)
+    setSelectedCard(card)
   }
 
   React.useEffect(() => {
     if (isAnyPopupOpen) {
       function handleCloseByEsc(evt) {
         if (evt.key === 'Escape') {
-          closeAllPopups();
+          closeAllPopups()
         }
       }
-      document.addEventListener('keydown', handleCloseByEsc);
+      document.addEventListener('keydown', handleCloseByEsc)
 
       return () => {
-        document.removeEventListener('keydown', handleCloseByEsc);
-      };
+        document.removeEventListener('keydown', handleCloseByEsc)
+      }
     }
-  }, [isAnyPopupOpen]);
+  }, [isAnyPopupOpen])
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((profile) => profile._id === currentUser._id);
+    const isLiked = card.likes.some(
+      (profile) => profile._id === currentUser._id
+    )
 
     if (!isLiked) {
       api
         .putLikeApi(card._id)
         .then((newCard) => {
           setCards((state) => {
-            return state.map((c) => (c._id === card._id ? newCard : c));
-          });
+            return state.map((c) => (c._id === card._id ? newCard : c))
+          })
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
     } else {
       api
         .deleteLikeApi(card._id)
         .then((newCard) => {
           setCards((state) => {
-            return state.map((c) => (c._id === card._id ? newCard : c));
-          });
+            return state.map((c) => (c._id === card._id ? newCard : c))
+          })
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
     }
   }
 
@@ -106,40 +114,40 @@ function App() {
       .deleteCardApi(card._id)
       .then(() => {
         setCards((state) => {
-          return state.filter((c) => c._id !== card._id);
-        });
+          return state.filter((c) => c._id !== card._id)
+        })
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
   }
 
   function handleUpdateUser(data) {
     api
       .setUserInfoApi(data.name, data.about)
       .then((profile) => {
-        setCurrentUser(profile);
-        closeAllPopups();
+        setCurrentUser(profile)
+        closeAllPopups()
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
   }
 
   function handleUpdateAvatar(avatarLink) {
     api
       .changeAvatar(avatarLink.avatar)
       .then((profile) => {
-        setCurrentUser(profile);
-        closeAllPopups();
+        setCurrentUser(profile)
+        closeAllPopups()
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
   }
 
   function handleAddPlaceSubmit(data) {
     api
       .postCardApi(data.name, data.link)
       .then((newCard) => {
-        setCards([newCard, ...cards]);
-        closeAllPopups();
+        setCards([newCard, ...cards])
+        closeAllPopups()
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
   }
 
   return (
@@ -155,11 +163,17 @@ function App() {
           onCardDelete={handleCardDelete}
           cards={cards}
         />
-        {/* <Login />
-        <Register /> */}
+        {/* <Login /> */}
+        {/* <Register /> */}
+        <SuccessPopup isOpen={isImagePopupOpen} onClose={closeAllPopups} />
+        <FailPopup isOpen={isImagePopupOpen} onClose={closeAllPopups} />
         <Footer />
 
-        <ImagePopup isOpen={isImagePopupOpen} card={selectedCard} onClose={closeAllPopups} />
+        <ImagePopup
+          isOpen={isImagePopupOpen}
+          card={selectedCard}
+          onClose={closeAllPopups}
+        />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
@@ -188,7 +202,7 @@ function App() {
         </PopupWithForm>
       </div>
     </CurrentUserContext.Provider>
-  );
+  )
 }
 
-export default App;
+export default App
