@@ -45,10 +45,12 @@ body {
 @import url(./blocks/login-register/login-register.css);
 @import url(./blocks/login-register/__title/login-register__title.css);
 @import url(./blocks/login-register/__text/login-register__text.css);
-@import url(./blocks/login-register/__password/login-register__password.css);
-@import url(./blocks/login-register/__email/login-register__email.css);
+@import url(./blocks/login-register/__input/login-register__input.css);
 @import url(./blocks/login-register/__button/login-register__button.css);
-@import url(./blocks/header/__login-text/header__login-logout-text.css);
+@import url(./blocks/header/__login-logout-text/header__login-logout-text.css);
 @import url(./blocks/popup/__success-icon/popup__success-fail-icon.css);
 @import url(./blocks/popup/__success-fail-text/popup__success-fail-text.css);
 @import url(./blocks/header/__email/header__email.css);
+@import url(./blocks/header/__menu-button/header__menu-button.css);
+@import url(./blocks/header/__line/header__line.css);
+@import url(./blocks/header/__login-block/header__login-block.css)

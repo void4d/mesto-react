@@ -6,3 +6,9 @@
     font-weight: 500;
     line-height: 22px;
 }
+
+@media screen and (max-width: 599px) {
+    .header__email {
+      display: none;
+    }
+  }
