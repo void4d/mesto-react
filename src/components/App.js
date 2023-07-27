@@ -13,6 +13,7 @@ import AddPlacePopup from './AddPlacePopup'
 import Login from './Login'
 import Register from './Register'
 import InfoTooltip from './InfoTooltip.js'
+import { Routes, Route } from 'react-router-dom'
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '' })
@@ -162,21 +163,26 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
-        <Main
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-          cards={cards}
-        />
-        {/* <Login /> */}
-        {/* <Register /> */}
-        <InfoTooltip
-          isSuccessful={isSuccessful}
-          onClose={closeAllPopups}
-        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Main
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onEditAvatar={handleEditAvatarClick}
+                onCardClick={handleCardClick}
+                onCardLike={handleCardLike}
+                onCardDelete={handleCardDelete}
+                cards={cards}
+              />
+            }
+          ></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/sign-up" element={<Register />}></Route>
+        </Routes>
+
+        <InfoTooltip isSuccessful={isSuccessful} onClose={closeAllPopups} />
         <Footer />
 
         <ImagePopup
