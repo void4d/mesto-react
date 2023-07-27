@@ -1,9 +1,9 @@
 import failIcon from '../images/fail-icon.svg';
 
-function FailPopup ({ isOpen, onClose }) {
+function FailPopup ({ onClose }) {
     return (
       <div
-      className={`popup popup_type_fail ${isOpen ? 'popup_opened' : ''}`}
+      className={`popup popup_type_fail`}
         onClick={onClose}
       >
         <div className="popup__container" onClick={(evt) => evt.stopPropagation()}>

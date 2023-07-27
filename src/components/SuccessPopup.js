@@ -1,9 +1,9 @@
 import successIcon from '../images/success-icon.svg';
 
-function SuccessPopup ({ isOpen, onClose }) {
+function SuccessPopup ({ onClose }) {
     return (
       <div
-      className={`popup popup_type_success ${isOpen ? 'popup_opened' : ''}`}
+      className={`popup popup_type_success`}
         onClick={onClose}
       >
         <div className="popup__container" onClick={(evt) => evt.stopPropagation()}>

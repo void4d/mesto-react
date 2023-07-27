@@ -163,10 +163,10 @@ function App() {
           onCardDelete={handleCardDelete}
           cards={cards}
         />
-        {/* <Login /> */}
-        {/* <Register /> */}
-        <SuccessPopup isOpen={isImagePopupOpen} onClose={closeAllPopups} />
-        <FailPopup isOpen={isImagePopupOpen} onClose={closeAllPopups} />
+        {/* <Login />
+        <Register /> */}
+        <SuccessPopup onClose={closeAllPopups} />
+        <FailPopup onClose={closeAllPopups} />
         <Footer />
 
         <ImagePopup
