@@ -12,8 +12,7 @@ import EditAvatarPopup from './EditAvatarPopup'
 import AddPlacePopup from './AddPlacePopup'
 import Login from './Login'
 import Register from './Register'
-import SuccessPopup from './SuccessPopup'
-import FailPopup from './FailPopup'
+import InfoTooltip from './InfoTooltip.js'
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '' })
@@ -32,15 +31,23 @@ function App() {
     React.useState(false)
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false)
+  const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false)
 
   const [isImagePopupOpen, setImagePopupOpen] = React.useState(false)
   const [selectedCard, setSelectedCard] = React.useState({})
+
+  const [isSuccessful, setIsSuccessful] = React.useState(false)
 
   const isAnyPopupOpen =
     isEditProfilePopupOpen ||
     isAddPlacePopupOpen ||
     isEditAvatarPopupOpen ||
-    isImagePopupOpen
+    isImagePopupOpen ||
+    isInfoTooltipOpen
+
+  function handleInfoTooltip() {
+    setIsSuccessful(true)
+  }
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true)
@@ -59,6 +66,7 @@ function App() {
     setAddPlacePopupOpen(false)
     setEditAvatarPopupOpen(false)
     setImagePopupOpen(false)
+    setInfoTooltipOpen(false)
 
     setSelectedCard({})
   }
@@ -165,8 +173,10 @@ function App() {
         />
         {/* <Login /> */}
         {/* <Register /> */}
-        <SuccessPopup onClose={closeAllPopups} />
-        <FailPopup onClose={closeAllPopups} />
+        <InfoTooltip
+          isSuccessful={isSuccessful}
+          onClose={closeAllPopups}
+        />
         <Footer />
 
         <ImagePopup
