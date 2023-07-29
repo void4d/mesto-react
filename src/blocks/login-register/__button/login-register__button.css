@@ -12,8 +12,8 @@
 }
 
 @media screen and (max-width: 599px) {
-    .login-register__button {
-        width: 260px;
-        margin-top: 173px;
-    }
+  .login-register__button {
+    width: 260px;
+    margin-top: 173px;
   }
+}

@@ -1,5 +1,5 @@
 .popup__error-message {
-  color: #FF0000;
+  color: #ff0000;
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
@@ -9,10 +9,6 @@
   top: 23px;
   z-index: 1;
 }
-
-
-
-
 
 @media screen and (max-width: 599px) {
   .popup__error-message {

@@ -1,5 +1,5 @@
 body {
-    background-color: #000000;
+  background-color: #000000;
 }
 
 @import url(./vendor/normalize.css);
@@ -53,4 +53,4 @@ body {
 @import url(./blocks/header/__email/header__email.css);
 @import url(./blocks/header/__menu-button/header__menu-button.css);
 @import url(./blocks/header/__line/header__line.css);
-@import url(./blocks/header/__login-block/header__login-block.css)
+@import url(./blocks/header/__login-block/header__login-block.css);

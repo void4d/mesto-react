@@ -1,15 +1,15 @@
 export default class Api {
   constructor(config) {
-    this._url = config.url;
-    this._headers = config.headers;
-    this._authorization = config.headers.authorization;
+    this._url = config.url
+    this._headers = config.headers
+    this._authorization = config.headers.authorization
   }
 
   _handleResponse(res) {
     if (res.ok) {
-      return res.json();
+      return res.json()
     } else {
-      return Promise.reject(`Ошибка: ${res.status}`);
+      return Promise.reject(`Ошибка: ${res.status}`)
     }
   }
 
@@ -19,7 +19,7 @@ export default class Api {
         authorization: this._authorization,
         'Content-type': 'application/json',
       },
-    }).then(this._handleResponse);
+    }).then(this._handleResponse)
   }
 
   postCardApi(name, link) {
@@ -33,7 +33,7 @@ export default class Api {
         name: name,
         link: link,
       }),
-    }).then(this._handleResponse);
+    }).then(this._handleResponse)
   }
 
   getUserInfoApi() {
@@ -43,7 +43,7 @@ export default class Api {
         authorization: this._authorization,
         'Content-type': 'application/json',
       },
-    }).then(this._handleResponse);
+    }).then(this._handleResponse)
   }
 
   setUserInfoApi(name, about) {
@@ -57,7 +57,7 @@ export default class Api {
         name: name,
         about: about,
       }),
-    }).then(this._handleResponse);
+    }).then(this._handleResponse)
   }
 
   putLikeApi(cardId) {
@@ -67,7 +67,7 @@ export default class Api {
         authorization: this._authorization,
         'Content-type': 'application/json',
       },
-    }).then(this._handleResponse);
+    }).then(this._handleResponse)
   }
 
   deleteLikeApi(cardId) {
@@ -77,7 +77,7 @@ export default class Api {
         authorization: this._authorization,
         'Content-type': 'application/json',
       },
-    }).then(this._handleResponse);
+    }).then(this._handleResponse)
   }
 
   deleteCardApi(cardId) {
@@ -87,7 +87,7 @@ export default class Api {
         authorization: this._authorization,
         'Content-type': 'application/json',
       },
-    }).then(this._handleResponse);
+    }).then(this._handleResponse)
   }
 
   changeAvatar(avatarLink) {
@@ -100,14 +100,15 @@ export default class Api {
       body: JSON.stringify({
         avatar: avatarLink,
       }),
-    }).then(this._handleResponse);
+    }).then(this._handleResponse)
   }
-}
 
+
+}
 
 export const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-68',
   headers: {
     authorization: '8156abe8-8242-4bae-8403-684c2d885ae6',
   },
-});
+})

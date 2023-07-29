@@ -6,7 +6,6 @@
   grid-template-columns: 120px 1fr 150px;
 }
 
-
 @media screen and (max-width: 895px) {
   .profile {
     width: 282px;
