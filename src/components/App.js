@@ -37,13 +37,15 @@ function App() {
 
   React.useEffect(() => {
     // Получение данных карточек и профиля
-    Promise.all([api.getUserInfoApi(), api.getInitialCardsApi()])
-      .then(([profile, cards]) => {
-        setCards(cards)
-        setCurrentUser(profile)
-      })
-      .catch((err) => console.log(err))
-  }, [])
+    if (isLoggedIn) {
+      Promise.all([api.getUserInfoApi(), api.getInitialCardsApi()])
+        .then(([profile, cards]) => {
+          setCards(cards)
+          setCurrentUser(profile)
+        })
+        .catch((err) => console.log(err))
+    }
+  }, [isLoggedIn])
 
   React.useEffect(() => {
     const jwt = localStorage.getItem('jwt');
@@ -55,7 +57,7 @@ function App() {
           setHeaderEmail(res.data.email)
           navigate('/')
         }
-      })
+      }).catch((err) => console.log(err))
     }
   }, [isLoggedIn])
 
@@ -81,7 +83,6 @@ function App() {
     setEditAvatarPopupOpen(false)
     setImagePopupOpen(false)
     setInfoTooltipOpen(false)
-
     setSelectedCard({})
   }
 
@@ -176,39 +177,38 @@ function App() {
       })
       .catch((err) => console.log(err))
   }
+
   // Регистрация
   function handleRegister(email, password) {
     return auth.register(email, password)
       .then(res => {
-        if (res.ok) {
-          setIsSuccessful(true)
-          setInfoTooltipOpen(true)
-          navigate('/signin')
-        } else {
-          setIsSuccessful(false)
-          setInfoTooltipOpen(true)
-        }
+        setIsSuccessful(true)
+        setInfoTooltipOpen(true)
+        navigate('/signin')
+      })
+      .catch(res => {
+        setIsSuccessful(false)
+        setInfoTooltipOpen(true)
       })
   }
+
   // Вход
   function handleLogin(email, password) {
     return auth.authorize(email, password)
       .then(res => {
-        if (res.token) {
-          localStorage.setItem('jwt', res.token)
-          setHeaderEmail(email)
-          setIsLoggedIn(true)
-          navigate('/')
-        } else {
-          setIsSuccessful(false)
-          setInfoTooltipOpen(true)
-        }
+        localStorage.setItem('jwt', res.token)
+        setHeaderEmail(email)
+        setIsLoggedIn(true)
+        navigate('/')
+      })
+      .catch(res => {
+        setIsSuccessful(false)
+        setInfoTooltipOpen(true)
       })
   }
 
   // Выход
   function handleLogOut() {
-
     localStorage.removeItem('jwt')
     setIsLoggedIn(false);
     navigate('/signin')

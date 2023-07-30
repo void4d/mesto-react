@@ -13,14 +13,11 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   }
 
   return (
-    <PopupWithForm class="change-avatar" id="change-avatar-form" name="change-avatar" title="Обновить аватар" isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>
+    <PopupWithForm class="change-avatar" id="change-avatar-form" name="change-avatar" title="Обновить аватар" isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit} buttonText={'Сохранить'}>
       <div className="popup__input-container">
         <input id="avatar-link" className="popup__input popup__input_type_link" name="link" placeholder="Ссылка на картинку" required type="url" ref={avatarRef} onSubmit={handleSubmit}></input>
         <span id="avatar-link-error" className="popup__error-message"></span>
       </div>
-      <button className="popup__save-button" type="submit">
-        Сохранить
-      </button>
     </PopupWithForm>
   )
 }

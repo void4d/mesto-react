@@ -3,6 +3,14 @@ export default class Auth {
     this._url = config.url
   }
 
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json() 
+    } else {
+      return Promise.reject(`Ошибка ${res.status}`)
+    }
+  }
+
   register(email, password) {
     return fetch(`${this._url}/signup`, {
       method: 'POST',
@@ -13,7 +21,7 @@ export default class Auth {
         email,
         password
       })
-    })
+    }).then(this._checkResponse);
   }
 
   authorize(email, password) {
@@ -27,7 +35,7 @@ export default class Auth {
         email,
         password
       })
-    }).then(res => res.json())
+    }).then(this._checkResponse);
   }
  
   getContent(token) {
@@ -38,7 +46,7 @@ export default class Auth {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       }
-    }).then(res => res.json())
+    }).then(this._checkResponse);
   }
 
 }

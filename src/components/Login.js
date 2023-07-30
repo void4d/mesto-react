@@ -7,7 +7,7 @@ function Login({ onLogin }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    onLogin(email, password).catch(err => console.log(err))
+    onLogin(email, password)
   }
 
   return (
